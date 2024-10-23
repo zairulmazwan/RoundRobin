@@ -3,12 +3,14 @@ public class Process
     string processName;
     int burstTime;
     int remainingTime;
+    int waitingTime;
 
     public Process (string name, int bt)
     {
         processName = name;
         burstTime = bt;
         remainingTime = bt;
+        waitingTime = 0;
     }
 
     public List<Process> genDataset(int n)
@@ -33,5 +35,15 @@ public class Process
         Console.WriteLine("Burst time remaining : "+remainingTime);
     }
 
+}
 
+public class RoundRobin 
+{
+    Queue<Process> queue = new Queue<Process>();
+    int tiimeSlot = 3;
+
+    public void insertProcess(Process x)
+    {
+
+    }
 }
