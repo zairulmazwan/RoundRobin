@@ -47,10 +47,12 @@ public class RoundRobin
     List<Process> processed = new List<Process>();
     int timeSlot = 3;
     int currentSlot = 0;
-    Queue<Process> data = new Queue<Process>();
+    Queue<Process> queue = new Queue<Process>();
+    int numOfProcess;
 
     public RoundRobin (int n)
     {
+        numOfProcess = n;
         genDataset(n);   //copy the dataset into the RoundRobin's property variable
     }
 
@@ -61,30 +63,29 @@ public class RoundRobin
             Random r = new Random();
             int bt = r.Next(3,12);
             Process p = new Process("P_"+(i+1), bt);
-            data.Enqueue(p);
+            queue.Enqueue(p);
         }
     }
 
     public void insertProcess()
     {
-        Process x = data.Dequeue();
-        processed.Add(x);
-        x.updateWaitingTime(currentSlot-x.prevSlot);
-        currentSlot += (x.getRemaining()<timeSlot) ? x.getRemaining():timeSlot;
-        x.updateRemaining(timeSlot); 
-        x.updatePrevSlot(currentSlot);
+        Process x = queue.Dequeue(); //take the process from the queue on FIFO basis
+        processed.Add(x); //attend the process
+        x.updateWaitingTime(currentSlot-x.prevSlot); //update the waiting time of the process
+        currentSlot += (x.getRemaining()<timeSlot) ? x.getRemaining():timeSlot; //update the current slot after the process
+        x.updateRemaining(timeSlot); //update the remaining burst time for the process
+        x.updatePrevSlot(currentSlot); //update the process' slot
 
-        if(x.getRemaining() > 0)
+        if(x.getRemaining() > 0) //if the process still has burst time, insert the process back into the queue
         {
-            data.Enqueue(x);
+            queue.Enqueue(x);
         }
     }
 
     public void runRoundRobin ()
     {
-        while(data.Count > 0)
+        while(queue.Count > 0)
         {
-            // Console.WriteLine("Process...");
             insertProcess();
         }
         printRes();
@@ -92,9 +93,9 @@ public class RoundRobin
 
     public void printQueue()
     {
-        Console.WriteLine("There are "+data.Count+" processes in the queue");
+        Console.WriteLine("There are "+queue.Count+" processes in the queue");
 
-        foreach(Process x in data)
+        foreach(Process x in queue)
         {
             Console.Write(x.processName);
             Console.Write("\t"+x.getRemaining());
@@ -105,11 +106,15 @@ public class RoundRobin
     public void printRes ()
     {
          Console.WriteLine("All processes have been attended");
-          foreach(Process x in processed)
+        foreach(Process x in processed)
         {
             Console.Write(x.processName);
-            Console.Write("\tWaiting time: "+x.waitingTime);
+            // Console.Write("\tWaiting time: "+x.waitingTime);
             Console.WriteLine();
+        }
+        for(int i=0; i<numOfProcess; i++)
+        {
+            Console.WriteLine("Process "+processed[i].processName+" waiting time is "+processed[i].waitingTime);
         }
     }
 }
