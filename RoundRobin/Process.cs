@@ -1,6 +1,6 @@
 public class Process
 {
-    string processName;
+    public string processName;
     int burstTime;
     int remainingTime;
     int waitingTime;
@@ -13,15 +13,14 @@ public class Process
         waitingTime = 0;
     }
 
-    public List<Process> genDataset(int n)
-    {
-        List<Process> res = new List<Process>();
-        return res;
-    }
-
     public void updateRemaining (int value)
     {
         remainingTime = remainingTime-value;
+    }
+
+    public void updateWaitingTime (int value)
+    {
+        waitingTime += value;
     }
     public int getRemaining ()
     {
@@ -38,26 +37,56 @@ public class Process
 
 public class RoundRobin 
 {
-    Queue<Process> queue = new Queue<Process>();
+    List<Process> queue = new List<Process>();
     int timeSlot = 3;
-    List<Process> data;
+    int currentSlot = 0;
+    Queue<Process> data;
 
-    public RoundRobin (List<Process> d)
+    public RoundRobin (int n)
     {
-        data.AddRange(d); //copy the dataset into the RoundRobin's property variable
+        genDataset(n);   //copy the dataset into the RoundRobin's property variable
     }
 
+    public void genDataset(int n)
+    {
+        for(int i=0; i<n; i++)
+        {
+            Random r = new Random();
+            int bt = r.Next(3,12);
+            Process p = new Process("P_"+i+1, bt);
+            data.Enqueue(p);
+        }
+    }
 
     public void insertProcess(Process x)
     {
-
+        data.Dequeue();
+        queue.Add(x);
+        x.updateRemaining(timeSlot);
+        x.updateWaitingTime(timeSlot);
+        if(x.getRemaining() > 0)
+        {
+            data.Enqueue(x);
+        }
     }
 
     public void runRoundRobin ()
     {
         while(data.Count > 0)
         {
-            
+
+        }
+    }
+
+    public void printQueue()
+    {
+        Console.WriteLine("There are "+data.Count+" processes in the queue");
+
+        foreach(Process x in data)
+        {
+            Console.Write(x.processName);
+            Console.Write("\t"+x.getRemaining());
+            Console.WriteLine();
         }
     }
 }

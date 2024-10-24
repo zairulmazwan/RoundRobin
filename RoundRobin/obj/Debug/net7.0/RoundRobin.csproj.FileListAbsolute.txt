@@ -12,3 +12,4 @@
 /Users/zairulmazwan/Dotnet/RoundRobin/RoundRobin/obj/Debug/net7.0/RoundRobin.pdb
 /Users/zairulmazwan/Dotnet/RoundRobin/RoundRobin/obj/Debug/net7.0/RoundRobin.genruntimeconfig.cache
 /Users/zairulmazwan/Dotnet/RoundRobin/RoundRobin/obj/Debug/net7.0/ref/RoundRobin.dll
+/Users/zairulmazwan/Dotnet/RoundRobin/RoundRobin/obj/Debug/net7.0/RoundRobin.sourcelink.json

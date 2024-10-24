@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RoundRobin")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7123bd59d0e151511a00c50151082fd877721c34")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+10e4ec19268e2a800c2857079132a56ed1088655")]
 [assembly: System.Reflection.AssemblyProductAttribute("RoundRobin")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RoundRobin")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
