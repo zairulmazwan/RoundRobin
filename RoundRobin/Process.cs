@@ -40,7 +40,7 @@ public class RoundRobin
     List<Process> queue = new List<Process>();
     int timeSlot = 3;
     int currentSlot = 0;
-    Queue<Process> data;
+    Queue<Process> data = new Queue<Process>();
 
     public RoundRobin (int n)
     {
