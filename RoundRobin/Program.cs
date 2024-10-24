@@ -6,6 +6,6 @@
 // p1.updateRemaining(3);
 // p1.printProcessInfo();
 
-RoundRobin rb = new RoundRobin(3);
+RoundRobin rb = new RoundRobin(2);
 rb.printQueue();
 rb.runRoundRobin();

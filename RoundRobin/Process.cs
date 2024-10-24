@@ -69,14 +69,14 @@ public class RoundRobin
 
     public void insertProcess()
     {
-        Process x = queue.Dequeue(); //take the process from the queue on FIFO basis
+        Process x = queue.Dequeue(); //take the process from the queue on the FIFO basis
         processed.Add(x); //attend the process
         x.updateWaitingTime(currentSlot-x.prevSlot); //update the waiting time of the process
-        currentSlot += (x.getRemaining()<timeSlot) ? x.getRemaining():timeSlot; //update the current slot after the process
+        currentSlot += (x.getRemaining()<timeSlot) ? x.getRemaining():timeSlot; //update the current slot
         x.updateRemaining(timeSlot); //update the remaining burst time for the process
         x.updatePrevSlot(currentSlot); //update the process' slot
 
-        if(x.getRemaining() > 0) //if the process still has burst time, insert the process back into the queue
+        if(x.getRemaining() > 0) //If the process still has remaining burst time, place it back into the queue
         {
             queue.Enqueue(x);
         }
@@ -109,7 +109,6 @@ public class RoundRobin
         foreach(Process x in processed)
         {
             Console.Write(x.processName);
-            // Console.Write("\tWaiting time: "+x.waitingTime);
             Console.WriteLine();
         }
         for(int i=0; i<numOfProcesses; i++)
