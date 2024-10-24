@@ -48,11 +48,11 @@ public class RoundRobin
     int timeSlot = 3;
     int currentSlot = 0;
     Queue<Process> queue = new Queue<Process>();
-    int numOfProcess;
+    int numOfProcesses;
 
     public RoundRobin (int n)
     {
-        numOfProcess = n;
+        numOfProcesses = n;
         genDataset(n);   //copy the dataset into the RoundRobin's property variable
     }
 
@@ -112,7 +112,7 @@ public class RoundRobin
             // Console.Write("\tWaiting time: "+x.waitingTime);
             Console.WriteLine();
         }
-        for(int i=0; i<numOfProcess; i++)
+        for(int i=0; i<numOfProcesses; i++)
         {
             Console.WriteLine("Process "+processed[i].processName+" waiting time is "+processed[i].waitingTime);
         }
