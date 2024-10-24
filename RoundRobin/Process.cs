@@ -1,16 +1,18 @@
+using System.Data;
+
 public class Process
 {
     public string processName;
     int burstTime;
     int remainingTime;
-    int waitingTime;
+    public int prevSlot = 0;
+    public int waitingTime = 0;
 
     public Process (string name, int bt)
     {
         processName = name;
         burstTime = bt;
         remainingTime = bt;
-        waitingTime = 0;
     }
 
     public void updateRemaining (int value)
@@ -21,6 +23,11 @@ public class Process
     public void updateWaitingTime (int value)
     {
         waitingTime += value;
+    }
+
+    public void updatePrevSlot(int ps)
+    {
+        prevSlot = ps;
     }
     public int getRemaining ()
     {
@@ -37,7 +44,7 @@ public class Process
 
 public class RoundRobin 
 {
-    List<Process> queue = new List<Process>();
+    List<Process> processed = new List<Process>();
     int timeSlot = 3;
     int currentSlot = 0;
     Queue<Process> data = new Queue<Process>();
@@ -53,17 +60,20 @@ public class RoundRobin
         {
             Random r = new Random();
             int bt = r.Next(3,12);
-            Process p = new Process("P_"+i+1, bt);
+            Process p = new Process("P_"+(i+1), bt);
             data.Enqueue(p);
         }
     }
 
-    public void insertProcess(Process x)
+    public void insertProcess()
     {
-        data.Dequeue();
-        queue.Add(x);
-        x.updateRemaining(timeSlot);
-        x.updateWaitingTime(timeSlot);
+        Process x = data.Dequeue();
+        processed.Add(x);
+        x.updateWaitingTime(currentSlot-x.prevSlot);
+        currentSlot += (x.getRemaining()<timeSlot) ? x.getRemaining():timeSlot;
+        x.updateRemaining(timeSlot); 
+        x.updatePrevSlot(currentSlot);
+
         if(x.getRemaining() > 0)
         {
             data.Enqueue(x);
@@ -74,8 +84,10 @@ public class RoundRobin
     {
         while(data.Count > 0)
         {
-
+            // Console.WriteLine("Process...");
+            insertProcess();
         }
+        printRes();
     }
 
     public void printQueue()
@@ -86,6 +98,17 @@ public class RoundRobin
         {
             Console.Write(x.processName);
             Console.Write("\t"+x.getRemaining());
+            Console.WriteLine();
+        }
+    }
+
+    public void printRes ()
+    {
+         Console.WriteLine("All processes have been attended");
+          foreach(Process x in processed)
+        {
+            Console.Write(x.processName);
+            Console.Write("\tWaiting time: "+x.waitingTime);
             Console.WriteLine();
         }
     }
