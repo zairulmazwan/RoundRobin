@@ -16,7 +16,6 @@ public class Process
     public List<Process> genDataset(int n)
     {
         List<Process> res = new List<Process>();
-
         return res;
     }
 
@@ -40,10 +39,25 @@ public class Process
 public class RoundRobin 
 {
     Queue<Process> queue = new Queue<Process>();
-    int tiimeSlot = 3;
+    int timeSlot = 3;
+    List<Process> data;
+
+    public RoundRobin (List<Process> d)
+    {
+        data.AddRange(d); //copy the dataset into the RoundRobin's property variable
+    }
+
 
     public void insertProcess(Process x)
     {
 
+    }
+
+    public void runRoundRobin ()
+    {
+        while(data.Count > 0)
+        {
+            
+        }
     }
 }
